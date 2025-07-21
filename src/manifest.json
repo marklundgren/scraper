@@ -1,25 +1,33 @@
 {
+  "manifest_version": 3,
   "name": "Scraper",
-  "version": "1.6",
-  "description": "Scraper is a Google Chrome extension for getting data out of web pages and into spreadsheets.",
-  "icons": {
-    "16": "img/scraper16.png",
-    "32": "img/scraper32.png",
-    "48": "img/scraper48.png",
-    "128": "img/scraper128.png"
+  "version": "1.0",
+  "description": "Extract content from websites using CSS selectors.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "downloads",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
   },
-  "background_page": "background.html",
-	"permissions": [ "tabs", "contextMenus", "http://*/*", "https://*/*", "unlimitedStorage" ],
-	"content_scripts": [{
-    "matches": [ "http://*/*", "https://*/*" ],
-    "run_at": "document_start",
-    "js": [
-      "lib/jquery-ui-1.8.6/js/jquery-1.4.2.js", 
-      "lib/jquery-ui-1.8.6/js/jquery-ui-1.8.6.highlight.js", 
-      "js/shared.js",
-      "js/bit155/attr.js",
-      "js/bit155/scraper.js",
-      "js/contentscript.js"
-    ]
-  }]
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
 }
